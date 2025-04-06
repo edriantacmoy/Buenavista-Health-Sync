@@ -26,7 +26,7 @@ function onClick() {
       </v-main>
 
       <!-- Reduced height of footer -->
-      <v-footer border app color="#561C24" elevation="24" style="height: 40px; font-size: 0.75rem;">
+      <v-footer border app color="#561C24" elevation="24" style="height: 40px; font-size: 0.75rem;" class="font-weight-bold">
         2025 - Barangay Health Care
       </v-footer>
     </v-app>
