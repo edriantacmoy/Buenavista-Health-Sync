@@ -1,7 +1,25 @@
+<script setup>
+import { ref } from 'vue'
+
+const visible = ref(false)
+</script>
 <template>
   <v-form fast-fail @submit.prevent>
-    <v-text-field label="Username" variant="outlined"></v-text-field>
-    <v-text-field label="Password" type="password" variant="outlined"></v-text-field
+    <v-text-field
+      density="compact"
+      placeholder="Username"
+      prepend-inner-icon="mdi-account"
+      variant="outlined"
+    ></v-text-field>
+    <v-text-field
+      :append-inner-icon="visible ? 'mdi-eye-off' : 'mdi-eye'"
+      :type="visible ? 'text' : 'password'"
+      density="compact"
+      placeholder="Enter your password"
+      prepend-inner-icon="mdi-lock-outline"
+      variant="outlined"
+      @click:append-inner="visible = !visible"
+    ></v-text-field
     ><v-menu>
       <template #activator="{ props }">
         <v-btn v-bind="props" color="#561C24">Role</v-btn>
