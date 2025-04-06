@@ -14,12 +14,14 @@ const { mobile } = useDisplay()
           ><v-card class="mx-auto" elevation="24">
             <v-card-title class="text-center">
               <v-img
-              class="mx-auto rounded-circle mt-2"
-              src="/public/images/logo-favicon.jpg"
-              :width="mobile ? '75%' : '25% '"
-            ></v-img>
-             
-              <h3 class="font-weight-black"style="font-size: large;">Buenavista <br>Health Sync</h3>
+                class="mx-auto rounded-circle mt-2"
+                src="/public/images/logo-favicon.jpg"
+                :width="mobile ? '75%' : '40% '"
+              ></v-img>
+
+              <h3 class="font-weight-black" style="font-size: large">
+                Buenavista <br />Health Sync
+              </h3>
               <p style="font-size: x-small" class="font-weight-bold">Log in Form</p>
             </v-card-title>
 

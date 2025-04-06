@@ -12,7 +12,7 @@ function onClick() {
   <v-responsive class="border rounded">
     <v-app :theme="theme">
       <!-- Reduced height of app bar -->
-      <v-app-bar class="px-2" color="red-darken-3" style="height: 60px;">
+      <v-app-bar class="px-2" color="#561C24" style="height: 60px;">
         <v-img class="mx-auto" max-width="80" src="/public/images/img/BHSlogo.png"></v-img>
         <v-spacer />
         <v-img src="/public/images/img/Blogo.png" max-width="40" alt="Logo" />
@@ -26,7 +26,7 @@ function onClick() {
       </v-main>
 
       <!-- Reduced height of footer -->
-      <v-footer border app color="red-darken-3" elevation="24" style="height: 40px; font-size: 0.75rem;">
+      <v-footer border app color="#561C24" elevation="24" style="height: 40px; font-size: 0.75rem;">
         2025 - Barangay Health Care
       </v-footer>
     </v-app>
@@ -35,7 +35,7 @@ function onClick() {
 
 <style scoped>
 .v-main {
-  background-color: #EF9A9A;
+  background-color: #D9CAB3 ;
 }
 
 .center {
