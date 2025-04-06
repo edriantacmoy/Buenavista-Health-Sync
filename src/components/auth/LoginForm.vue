@@ -2,6 +2,7 @@
 import { ref } from 'vue'
 
 const visible = ref(false)
+const items = ['Municipal Admin', 'Barangay Admin']
 </script>
 <template>
   <v-form fast-fail @submit.prevent>
@@ -20,15 +21,12 @@ const visible = ref(false)
       variant="outlined"
       @click:append-inner="visible = !visible"
     ></v-text-field
-    ><v-menu>
-      <template #activator="{ props }">
-        <v-btn v-bind="props" color="#561C24">Role</v-btn>
-      </template>
-      <v-list>
-        <v-list-item title="Municipal Admin" />
-        <v-list-item title="Barangay Admin" />
-      </v-list>
-    </v-menu>
+    >  <v-autocomplete
+      density="compact"
+      variant="outlined"
+      :items="items"
+      label="Role"
+    ></v-autocomplete>
 
     <v-btn class="mt-2" type="submit" block color="#561C24" prepend-icon="mdi-login">Log in </v-btn>
   </v-form>
