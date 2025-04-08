@@ -2,7 +2,7 @@
 import { ref } from 'vue'
 
 const visible = ref(false)
-const items = ['Municipal Admin', 'Barangay Admin']
+const items = ['Municipal Admin', 'Barangay Admin','Barangay Health Worker']
 </script>
 <template>
   <v-form fast-fail @submit.prevent>
