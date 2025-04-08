@@ -15,7 +15,7 @@ const { mobile } = useDisplay()
             <v-card-title class="text-center">
               <v-img
                 class="mx-auto rounded-circle mt-2"
-                src="/public/images/logo-favicon.jpg"
+                src="/images/logo-favicon.jpg"
                 :width="mobile ? '75%' : '40% '"
               ></v-img>
 
