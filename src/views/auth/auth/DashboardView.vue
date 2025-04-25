@@ -4,12 +4,10 @@ import { useDisplay } from 'vuetify'
 const { mobile } = useDisplay()
 
 const onSubmit = () => {
-  // here you would normally validate credentials…
-  // and only navigate on success:
   router.push({ name: 'record' })
 }
 
-// Fix: Add this function to scroll smoothly to the info section
+
 const scrollToInfo = () => {
   const section = document.getElementById('info-section')
   if (section) {
