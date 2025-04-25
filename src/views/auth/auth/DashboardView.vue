@@ -3,7 +3,13 @@ import { useDisplay } from 'vuetify'
 
 const { mobile } = useDisplay()
 
-// Scroll to info section when "Learn more" is clicked
+const onSubmit = () => {
+  // here you would normally validate credentials…
+  // and only navigate on success:
+  router.push({ name: 'record' })
+}
+
+// Fix: Add this function to scroll smoothly to the info section
 const scrollToInfo = () => {
   const section = document.getElementById('info-section')
   if (section) {
@@ -15,21 +21,21 @@ const scrollToInfo = () => {
 <template>
   <v-app>
     <!-- Navigation Bar -->
-    <v-app-bar color="#561C24" dark elevate-on-scroll flat>
-      <v-container class="d-flex align-center justify-space-between">
-        <div class="d-flex align-center gap-4">
-          <v-img src="/images/bhslogo.png" height="40" width="40" contain />
-          <v-img src="/images/buenalogo.png" height="40" width="40" contain />
+    <v-app-bar color="#561C24"  dark elevate-on-scroll flat>
+      <v-container class="d-flex align-center pa-0 ml-0 ">
+        <!-- Left-aligned logo -->
+        <div class="d-flex align-center mr-auto">
+          <v-img src="/images/img/bhww.png" height="80" width="75" class="mt-4" />
+          <v-img src="/images/img/buenalogo.png" height="50" width="50"  />
         </div>
 
-        <v-spacer></v-spacer>
-
-        <v-btn text to="/">Home</v-btn>
+        <!-- Navigation buttons -->
+        <v-btn text to="/dashboard">Home</v-btn>
         <v-btn text to="/bhws">BHW's</v-btn>
         <v-btn text to="/records">Records</v-btn>
         <v-btn text to="/calendar">Calendar</v-btn>
         <v-btn text to="/inventory">Inventory</v-btn>
-        <v-btn text to="/logout">Log out</v-btn>
+        <v-btn text to="/">Log out</v-btn>
       </v-container>
     </v-app-bar>
 
@@ -60,9 +66,11 @@ const scrollToInfo = () => {
           <v-col cols="12" md="6">
             <h2 class="text-h5 font-weight-bold mb-2">What is Buenavista Health Sync?</h2>
             <p class="text-body-1">
-              <b>Buenavista Health Sync (BHS)</b> is an innovative digital health platform aimed at transforming barangay healthcare services.
-              It allows for the secure online input and storage of community health records while archiving past records for easy retrieval.
-              Health workers gain real-time access to critical data, improving efficiency and the quality of care in the community.
+              <b>Buenavista Health Sync (BHS)</b> is an innovative digital health platform aimed at
+              transforming barangay healthcare services. It allows for the secure online input and
+              storage of community health records while archiving past records for easy retrieval.
+              Health workers gain real-time access to critical data, improving efficiency and the
+              quality of care in the community.
             </p>
           </v-col>
           <v-col cols="12" md="6">
@@ -97,12 +105,14 @@ const scrollToInfo = () => {
           <v-col cols="12" md="6">
             <h2 class="text-h5 font-weight-bold mb-2">Mission & Vision</h2>
             <p class="text-body-1 mb-4">
-              <b>Mission:</b><br>
-              To empower barangay healthcare workers with a secure, efficient platform for managing community health data and improving service delivery.
+              <b>Mission:</b><br />
+              To empower barangay healthcare workers with a secure, efficient platform for managing
+              community health data and improving service delivery.
             </p>
             <p class="text-body-1">
-              <b>Vision:</b><br>
-              To be the leading digital health platform for barangays, promoting data-driven, accessible, and sustainable healthcare through innovative technology.
+              <b>Vision:</b><br />
+              To be the leading digital health platform for barangays, promoting data-driven,
+              accessible, and sustainable healthcare through innovative technology.
             </p>
           </v-col>
         </v-row>
@@ -120,7 +130,7 @@ const scrollToInfo = () => {
 
 <style scoped>
 .hero-section {
-  background: url('/images/bhw.jpg') center center / cover no-repeat;
+  background: url('/images/img/bhw.png') center center / cover no-repeat;
 }
 .text-shadow {
   text-shadow: 2px 2px 6px rgba(0, 0, 0, 0.7);

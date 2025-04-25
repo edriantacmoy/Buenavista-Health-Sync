@@ -1,11 +1,22 @@
 <script setup>
 import { ref } from 'vue'
+import { useRouter } from 'vue-router'
+import { useDisplay } from 'vuetify'
 
 const visible = ref(false)
-const items = ['Municipal Admin', 'Barangay Admin','Barangay Health Worker']
+const items   = ['Municipal Admin', 'Barangay Admin','Barangay Health Worker']
+const { mobile } = useDisplay()
+
+const router = useRouter()
+
+const onSubmit = () => {
+  // here you would normally validate credentials…
+  // and only navigate on success:
+  router.push({ name: 'dashboard' })
+}
 </script>
 <template>
-  <v-form fast-fail @submit.prevent>
+ <v-form fast-fail @submit.prevent="onSubmit">
     <v-text-field
       density="compact"
       placeholder="Username"
@@ -29,5 +40,6 @@ const items = ['Municipal Admin', 'Barangay Admin','Barangay Health Worker']
     ></v-autocomplete>
 
     <v-btn class="mt-2" type="submit" block color="#561C24" prepend-icon="mdi-login">Log in </v-btn>
+    
   </v-form>
 </template>
