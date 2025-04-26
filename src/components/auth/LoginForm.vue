@@ -28,7 +28,6 @@ const onSubmit = () => {
    if(valid)
    onLogin()
   })
-  router.push({ name: 'dashboard' })
 }
 </script>
 <template>
