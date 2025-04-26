@@ -1,5 +1,5 @@
 <script setup>
-import { requiredValidator, emailValidator } from '@/utils/validator'
+import { requiredValidator, emailValidator } from '@/utils/validators'
 import { ref } from 'vue'
 
 const visible = ref(false)
@@ -28,7 +28,7 @@ const onSubmit = () => {
   refVfrom.value?.validate().then(({ valid }) => {
    if(valid)
    onLogin()
-  })
+  })}
 </script>
 <template>
   <v-form ref="refVform" fast-fail @submit.prevent="onSubmit">

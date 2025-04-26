@@ -1,5 +1,5 @@
 <script setup>
-import { requiredValidator, emailValidator } from '@/utils/validator'
+import { requiredValidator , emailValidator } from '@/utils/validators'
 import { ref } from 'vue'
 import { useRouter } from 'vue-router'
 import { useDisplay } from 'vuetify'
