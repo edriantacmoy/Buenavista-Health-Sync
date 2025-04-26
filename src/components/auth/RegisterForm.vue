@@ -1,14 +1,58 @@
 <script setup>
+import { requiredValidator, emailValidator } from '@/utils/validator'
 import { ref } from 'vue'
 
 const visible = ref(false)
-const items = ['Municipal Admin', 'Barangay Admin','Barangay Health Worker']
+const items = ['Municipal Admin', 'Barangay Admin', 'Barangay Health Worker']
+const formDataDefault = {
+  firstname: '',
+  lastname: '',
+  email: '',
+  password: '',
+  password_confirmation: '',
+}
+
+
+
+const formData = ref({
+  ...formDataDefault,
+})
+
+const refVfrom = ref()
+
+
+const onLogin = () => {
+  alert(formData.value.email)
+}
+const onSubmit = () => {
+  refVfrom.value?.validate().then(({ valid }) => {
+   if(valid)
+   onLogin()
+  })
 </script>
 <template>
-  <v-form fast-fail @submit.prevent>
-    <v-text-field density="compact" placeholder="First name" variant="outlined"></v-text-field>
-    <v-text-field density="compact" placeholder="Last name" variant="outlined"></v-text-field>
-    <v-text-field density="compact" placeholder="Username" variant="outlined"></v-text-field>
+  <v-form ref="refVform" fast-fail @submit.prevent="onSubmit">
+    <v-text-field
+      :rules="[requiredValidator]"
+      v-model="formData.firstname"
+      density="compact"
+      placeholder="First name"
+      variant="outlined"
+    ></v-text-field>
+    <v-text-field
+      :rules="[requiredValidator]"
+      v-model="formData.lastname"
+      density="compact"
+      placeholder="Last name"
+      variant="outlined"
+    ></v-text-field>
+    <v-text-field
+      :rules="[requiredValidator, emailValidator]"
+      v-model="formData.email"
+      density="compact"
+      placeholder="Email"
+      variant="outlined"
+    ></v-text-field>
     <v-autocomplete
       density="compact"
       variant="outlined"
@@ -16,6 +60,7 @@ const items = ['Municipal Admin', 'Barangay Admin','Barangay Health Worker']
       label="Role"
     ></v-autocomplete>
     <v-text-field
+      v-model="formData.password"
       :append-inner-icon="visible ? 'mdi-eye-off' : 'mdi-eye'"
       :type="visible ? 'text' : 'password'"
       density="compact"
@@ -23,8 +68,10 @@ const items = ['Municipal Admin', 'Barangay Admin','Barangay Health Worker']
       prepend-inner-icon="mdi-lock-outline"
       variant="outlined"
       @click:append-inner="visible = !visible"
+      :rules="[requiredValidator, passwordValidator]"
     ></v-text-field
     ><v-text-field
+      v-model="formData.password_confirmation"
       :append-inner-icon="visible ? 'mdi-eye-off' : 'mdi-eye'"
       :type="visible ? 'text' : 'password'"
       density="compact"
@@ -32,6 +79,10 @@ const items = ['Municipal Admin', 'Barangay Admin','Barangay Health Worker']
       prepend-inner-icon="mdi-lock-outline"
       variant="outlined"
       @click:append-inner="visible = !visible"
+      :rules="[
+        requiredValidator,
+        confirmValidator(formData.password_confirmation, formData.password),
+      ]"
     ></v-text-field>
 
     <v-btn class="mt-2" type="submit" block color="#561C24" prepend-icon="mdi-account-plus"
