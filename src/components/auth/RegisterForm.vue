@@ -4,6 +4,9 @@ import { ref } from 'vue'
 
 const visible = ref(false)
 const items = ['Municipal Admin', 'Barangay Admin', 'Barangay Health Worker']
+
+const refVform = ref()
+
 const formDataDefault = {
   firstname: '',
   lastname: '',
@@ -12,24 +15,31 @@ const formDataDefault = {
   password_confirmation: '',
 }
 
-
-
 const formData = ref({
   ...formDataDefault,
 })
 
-const refVfrom = ref()
+// Dummy validators if you don't have real ones
+const passwordValidator = value => {
+  return value?.length >= 6 || 'Password must be at least 6 characters'
+}
 
+const confirmValidator = (confirm, password) => {
+  return () => confirm === password || 'Passwords do not match'
+}
 
 const onLogin = () => {
   alert(formData.value.email)
 }
+
 const onSubmit = () => {
-  refVfrom.value?.validate().then(({ valid }) => {
-   if(valid)
-   onLogin()
-  })}
+  refVform.value?.validate().then(({ valid }) => {
+    if (valid) onLogin()
+  })
+}
 </script>
+
+
 <template>
   <v-form ref="refVform" fast-fail @submit.prevent="onSubmit">
     <v-text-field
