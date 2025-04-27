@@ -21,21 +21,19 @@ const scrollToInfo = () => {
 <template>
   <v-app>
     <!-- Navigation Bar -->
-    <v-app-bar color="#561C24" dark elevate-on-scroll flat>
-      <v-container class="d-flex align-center pa-0 ml-0">
-        <!-- Left-aligned logo -->
-        <div class="d-flex align-center mr-auto">
-          <v-img src="/images/img/bhww.png" height="80" width="75" class="mt-4" />
-          <v-img src="/images/img/buenalogo.png" height="50" width="50" />
+    <v-app-bar color="#561C24" dark flat>
+      <v-container class="d-flex align-center justify-space-between">
+        <div class="d-flex align-center">
+          <v-img src="/images/img/buenalogo.png" height="40" width="40" class="mr-2" />
         </div>
-
-        <!-- Navigation buttons -->
-        <v-btn text to="/dashboard">Home</v-btn>
-        <v-btn text to="/bhws">BHW's</v-btn>
-        <v-btn text to="/records">Records</v-btn>
-        <v-btn text to="/calendar">Calendar</v-btn>
-        <v-btn text to="/inventory">Inventory</v-btn>
-        <v-btn text to="/">Log out</v-btn>
+        <div>
+          <v-btn text to="/dashboard">Home</v-btn>
+          <v-btn text to="/bhws">BHW's</v-btn>
+          <v-btn text to="/records">Records</v-btn>
+          <v-btn text to="/calendar">Calendar</v-btn>
+          <v-btn text to="/inventory">Inventory</v-btn>
+          <v-btn text to="/">Log out</v-btn>
+        </div>
       </v-container>
     </v-app-bar>
 
