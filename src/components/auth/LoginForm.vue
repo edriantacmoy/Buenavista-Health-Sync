@@ -15,14 +15,12 @@ const router = useRouter()
 const formDataDefault = {
   email: '',
   password: '',
-  role: '', // Added role
+  role: '', // Still keeping role selection in the form
 }
 
 const formData = ref({
   ...formDataDefault,
 })
-
-const allowedRoles = ['Municipal Admin', 'Barangay Admin', 'Barangay Health Worker']
 
 const onLogin = async () => {
   const { data, error } = await supabase.auth.signInWithPassword({
@@ -35,31 +33,8 @@ const onLogin = async () => {
     alert('Login failed: ' + error.message)
   } else if (data?.user) {
     console.log('User logged in:', data)
-
-    // Fetch user data from Supabase
-    const { data: userDetails, error: userError } = await supabase
-      .from('users') // make sure you have a "users" table
-      .select('role')
-      .eq('id', data.user.id)
-      .single()
-
-    if (userError) {
-      console.error(userError)
-      alert('Failed to get user role: ' + userError.message)
-      return
-    }
-
-    const userRole = userDetails?.role
-    console.log('User role:', userRole)
-
-    // Check if user's role is allowed
-    if (allowedRoles.includes(userRole) && userRole === formData.value.role) {
-      alert('Login success! Welcome ' + userRole)
-      router.push({ name: 'record' }) // Redirect to dashboard
-    } else {
-      alert('Unauthorized role or role mismatch. Your role is: ' + userRole)
-      await supabase.auth.signOut()
-    }
+    alert('Login successful! Welcome!')
+    router.push({ name: 'record' }) // Directly redirect to dashboard
   }
 }
 
@@ -75,6 +50,7 @@ const onSubmit = () => {
   })
 }
 </script>
+
 
 <template>
   <v-form ref="refVform" fast-fail @submit.prevent="onSubmit">
@@ -113,3 +89,4 @@ const onSubmit = () => {
     </v-btn>
   </v-form>
 </template>
+
