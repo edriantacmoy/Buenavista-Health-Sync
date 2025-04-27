@@ -2,10 +2,6 @@
 import { requiredValidator, emailValidator } from '@/utils/validators'
 import { ref } from 'vue'
 import { supabase, formActionDefault } from '@/utils/supabase.js'
-import { formActionDefault } from '@/utils/supabase'
-
-const visible = ref(false)
-const items = ['Municipal Admin', 'Barangay Admin', 'Barangay Health Worker']
 
 const refVform = ref()
 
@@ -15,6 +11,7 @@ const formDataDefault = {
   email: '',
   password: '',
   password_confirmation: '',
+  role: '', // <-- ADD THIS
 }
 
 const formData = ref({
@@ -24,6 +21,12 @@ const formData = ref({
 const formAction = ref({
   ...formActionDefault,
 })
+
+const items = [
+  'Municipality Admin',
+  'Barangay Admin',
+  'Barangay Health Worker',
+]
 
 // Dummy validators if you don't have real ones
 const passwordValidator = (value) => {
@@ -37,6 +40,7 @@ const confirmValidator = (confirm, password) => {
 const onLogin = () => {
   alert(formData.value.email)
 }
+
 const onSubmit = async () => {
   formAction.value = { ...formActionDefault }
   formAction.value.formProcess = true
@@ -48,25 +52,30 @@ const onSubmit = async () => {
       data: {
         firstname: formData.value.firstname,
         lastname: formData.value.lastname,
+        role: formData.value.role, // <-- SAVE ROLE
       },
     },
   })
+
   if (error) {
     console.log(error)
     formAction.value.formErrorMessage = error.message
     formAction.value.formStatus = error.status
   } else if (data) {
     console.log(data)
-    formAction.value.formSuccessMessage = 'Sucessfully Registered'
+    formAction.value.formSuccessMessage = 'Successfully Registered'
   }
   formAction.value.formProcess = false
 }
 
 const onFormSubmit = () => {
   refVform.value?.validate().then(({ valid }) => {
-    if (valid) onLogin()
+    if (valid) onSubmit() // <-- FIX: call onSubmit instead of onLogin
   })
 }
+
+// Password visibility toggle
+const visible = ref(false)
 </script>
 
 <template>
@@ -100,6 +109,7 @@ const onFormSubmit = () => {
       placeholder="First name"
       variant="outlined"
     ></v-text-field>
+    
     <v-text-field
       :rules="[requiredValidator]"
       v-model="formData.lastname"
@@ -107,6 +117,7 @@ const onFormSubmit = () => {
       placeholder="Last name"
       variant="outlined"
     ></v-text-field>
+    
     <v-text-field
       :rules="[requiredValidator, emailValidator]"
       v-model="formData.email"
@@ -114,12 +125,17 @@ const onFormSubmit = () => {
       placeholder="Email"
       variant="outlined"
     ></v-text-field>
+    
     <v-autocomplete
-      density="compact"
-      variant="outlined"
+      v-model="formData.role"
       :items="items"
       label="Role"
+      density="compact"
+      variant="outlined"
+      :rules="[requiredValidator]"
+      placeholder="Select Role"
     ></v-autocomplete>
+
     <v-text-field
       v-model="formData.password"
       :append-inner-icon="visible ? 'mdi-eye-off' : 'mdi-eye'"
@@ -130,8 +146,9 @@ const onFormSubmit = () => {
       variant="outlined"
       @click:append-inner="visible = !visible"
       :rules="[requiredValidator, passwordValidator]"
-    ></v-text-field
-    ><v-text-field
+    ></v-text-field>
+
+    <v-text-field
       v-model="formData.password_confirmation"
       :append-inner-icon="visible ? 'mdi-eye-off' : 'mdi-eye'"
       :type="visible ? 'text' : 'password'"
@@ -154,7 +171,8 @@ const onFormSubmit = () => {
       prepend-icon="mdi-account-plus"
       :disabled="formAction.formProcess"
       :loading="formAction.formProcess"
-      >Register</v-btn
     >
+      Register
+    </v-btn>
   </v-form>
 </template>
