@@ -15,12 +15,10 @@ const router = useRouter()
 const formDataDefault = {
   email: '',
   password: '',
-  role: '', // Still keeping role selection in the form
+  role: '',
 }
 
-const formData = ref({
-  ...formDataDefault,
-})
+const formData = ref({ ...formDataDefault })
 
 const onLogin = async () => {
   const { data, error } = await supabase.auth.signInWithPassword({
@@ -34,7 +32,7 @@ const onLogin = async () => {
   } else if (data?.user) {
     console.log('User logged in:', data)
     alert('Login successful! Welcome!')
-    router.push({ name: 'record' }) // Directly redirect to dashboard
+    router.push({ name: 'dashboard' }) // ➡ Redirect to dashboard route (IMPORTANT)
   }
 }
 
@@ -50,7 +48,6 @@ const onSubmit = () => {
   })
 }
 </script>
-
 
 <template>
   <v-form ref="refVform" fast-fail @submit.prevent="onSubmit">
@@ -89,4 +86,3 @@ const onSubmit = () => {
     </v-btn>
   </v-form>
 </template>
-

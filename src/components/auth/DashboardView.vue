@@ -1,12 +1,13 @@
 <script setup>
 import { useDisplay } from 'vuetify'
+import { useRouter } from 'vue-router' // ✅ added this
 
 const { mobile } = useDisplay()
+const router = useRouter()
 
 const onSubmit = () => {
   router.push({ name: 'record' })
 }
-
 
 const scrollToInfo = () => {
   const section = document.getElementById('info-section')
@@ -15,6 +16,7 @@ const scrollToInfo = () => {
   }
 }
 </script>
+
 
 <template>
   <v-app>
