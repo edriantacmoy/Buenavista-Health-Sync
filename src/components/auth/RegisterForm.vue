@@ -1,7 +1,9 @@
 <script setup>
 import { requiredValidator, emailValidator } from '@/utils/validators'
 import { ref } from 'vue'
+import AlertNotification from '@/components/common/AlertNotification.vue'
 import { supabase, formActionDefault } from '@/utils/supabase.js'
+import AlertNotification from '@/components/common/AlertNotification.vue'
 
 const refVform = ref()
 
@@ -22,11 +24,7 @@ const formAction = ref({
   ...formActionDefault,
 })
 
-const items = [
-  'Municipality Admin',
-  'Barangay Admin',
-  'Barangay Health Worker',
-]
+const items = ['Municipality Admin', 'Barangay Admin', 'Barangay Health Worker']
 
 // Dummy validators if you don't have real ones
 const passwordValidator = (value) => {
@@ -64,6 +62,7 @@ const onSubmit = async () => {
   } else if (data) {
     console.log(data)
     formAction.value.formSuccessMessage = 'Successfully Registered'
+    refVform.value?.reset()
   }
   formAction.value.formProcess = false
 }
@@ -79,27 +78,10 @@ const visible = ref(false)
 </script>
 
 <template>
-  <v-alert
-    v-if="formAction.formSuccessMessage"
-    :text="formAction.formSuccessMessage"
-    title="Success!"
-    type="success"
-    variant="tonal"
-    density="compact"
-    border="start"
-    closable
-  ></v-alert>
-
-  <v-alert
-    v-if="formAction.formErrorMessage"
-    :text="formAction.formErrorMessage"
-    title="Ooops!"
-    type="error"
-    variant="tonal"
-    density="compact"
-    border="start"
-    closable
-  ></v-alert>
+  <AlertNotification
+    :form-success-message="formAction.formSuccessMessage"
+    :form-error-message="formAction.formErrorMessage"
+  ></AlertNotification>
 
   <v-form ref="refVform" fast-fail @submit.prevent="onFormSubmit">
     <v-text-field
@@ -109,7 +91,7 @@ const visible = ref(false)
       placeholder="First name"
       variant="outlined"
     ></v-text-field>
-    
+
     <v-text-field
       :rules="[requiredValidator]"
       v-model="formData.lastname"
@@ -117,7 +99,7 @@ const visible = ref(false)
       placeholder="Last name"
       variant="outlined"
     ></v-text-field>
-    
+
     <v-text-field
       :rules="[requiredValidator, emailValidator]"
       v-model="formData.email"
@@ -125,7 +107,7 @@ const visible = ref(false)
       placeholder="Email"
       variant="outlined"
     ></v-text-field>
-    
+
     <v-autocomplete
       v-model="formData.role"
       :items="items"
