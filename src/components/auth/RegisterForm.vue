@@ -1,6 +1,8 @@
 <script setup>
 import { requiredValidator, emailValidator } from '@/utils/validators'
 import { ref } from 'vue'
+import { supabase, formActionDefault } from '@/utils/supabase.js'
+import { formActionDefault } from '@/utils/supabase'
 
 const visible = ref(false)
 const items = ['Municipal Admin', 'Barangay Admin', 'Barangay Health Worker']
@@ -19,8 +21,12 @@ const formData = ref({
   ...formDataDefault,
 })
 
+const formAction = ref({
+  ...formActionDefault,
+})
+
 // Dummy validators if you don't have real ones
-const passwordValidator = value => {
+const passwordValidator = (value) => {
   return value?.length >= 6 || 'Password must be at least 6 characters'
 }
 
@@ -31,17 +37,62 @@ const confirmValidator = (confirm, password) => {
 const onLogin = () => {
   alert(formData.value.email)
 }
+const onSubmit = async () => {
+  formAction.value = { ...formActionDefault }
+  formAction.value.formProcess = true
 
-const onSubmit = () => {
+  const { data, error } = await supabase.auth.signUp({
+    email: formData.value.email,
+    password: formData.value.password,
+    options: {
+      data: {
+        firstname: formData.value.firstname,
+        lastname: formData.value.lastname,
+      },
+    },
+  })
+  if (error) {
+    console.log(error)
+    formAction.value.formErrorMessage = error.message
+    formAction.value.formStatus = error.status
+  } else if (data) {
+    console.log(data)
+    formAction.value.formSuccessMessage = 'Sucessfully Registered'
+  }
+  formAction.value.formProcess = false
+}
+
+const onFormSubmit = () => {
   refVform.value?.validate().then(({ valid }) => {
     if (valid) onLogin()
   })
 }
 </script>
 
-
 <template>
-  <v-form ref="refVform" fast-fail @submit.prevent="onSubmit">
+  <v-alert
+    v-if="formAction.formSuccessMessage"
+    :text="formAction.formSuccessMessage"
+    title="Success!"
+    type="success"
+    variant="tonal"
+    density="compact"
+    border="start"
+    closable
+  ></v-alert>
+
+  <v-alert
+    v-if="formAction.formErrorMessage"
+    :text="formAction.formErrorMessage"
+    title="Ooops!"
+    type="error"
+    variant="tonal"
+    density="compact"
+    border="start"
+    closable
+  ></v-alert>
+
+  <v-form ref="refVform" fast-fail @submit.prevent="onFormSubmit">
     <v-text-field
       :rules="[requiredValidator]"
       v-model="formData.firstname"
@@ -95,7 +146,14 @@ const onSubmit = () => {
       ]"
     ></v-text-field>
 
-    <v-btn class="mt-2" type="submit" block color="#561C24" prepend-icon="mdi-account-plus"
+    <v-btn
+      class="mt-2"
+      type="submit"
+      block
+      color="#561C24"
+      prepend-icon="mdi-account-plus"
+      :disabled="formAction.formProcess"
+      :loading="formAction.formProcess"
       >Register</v-btn
     >
   </v-form>
