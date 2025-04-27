@@ -2,6 +2,7 @@
 import { requiredValidator, emailValidator } from '@/utils/validators'
 import { ref } from 'vue'
 import { supabase, formActionDefault } from '@/utils/supabase.js'
+import AlertNotification from '../common/AlertNotification.vue'
 
 const refVform = ref()
 
@@ -76,6 +77,7 @@ const visible = ref(false)
 </script>
 
 <template>
+  <AlertNotification></AlertNotification>
   <AlertNotification
     :form-success-message="formAction.formSuccessMessage"
     :form-error-message="formAction.formErrorMessage"
