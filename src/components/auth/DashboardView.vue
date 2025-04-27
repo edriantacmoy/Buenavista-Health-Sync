@@ -2,7 +2,8 @@
 import { useDisplay } from 'vuetify'
 import { useRouter } from 'vue-router' // ✅ added this
 
-const { mobile } = useDisplay()
+const display = useDisplay()
+const mobile = display.mobile
 const router = useRouter()
 
 const onSubmit = () => {
@@ -17,16 +18,15 @@ const scrollToInfo = () => {
 }
 </script>
 
-
 <template>
   <v-app>
     <!-- Navigation Bar -->
-    <v-app-bar color="#561C24"  dark elevate-on-scroll flat>
-      <v-container class="d-flex align-center pa-0 ml-0 ">
+    <v-app-bar color="#561C24" dark elevate-on-scroll flat>
+      <v-container class="d-flex align-center pa-0 ml-0">
         <!-- Left-aligned logo -->
         <div class="d-flex align-center mr-auto">
           <v-img src="/images/img/bhww.png" height="80" width="75" class="mt-4" />
-          <v-img src="/images/img/buenalogo.png" height="50" width="50"  />
+          <v-img src="/images/img/buenalogo.png" height="50" width="50" />
         </div>
 
         <!-- Navigation buttons -->
