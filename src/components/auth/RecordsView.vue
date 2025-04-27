@@ -1,13 +1,18 @@
 <script setup>
-import { ref, onMounted } from 'vue'
+import { ref } from 'vue'
 import { useRouter } from 'vue-router'
-import { supabase } from '@/utils/supabase'
 
 const router = useRouter()
 
-const folders = ref([])
-const currentPath = ref([])
+const folders = ref([
+  { name: 'Purok 1', files: [], subfolders: [] },
+  { name: 'Purok 2', files: [], subfolders: [] },
+  { name: 'Purok 3', files: [], subfolders: [] },
+  { name: 'Purok 4', files: [], subfolders: [] },
+  { name: 'Barangay Health Registry', files: [], subfolders: [] }
+])
 
+const currentPath = ref([])
 const showCreateOptions = ref(false)
 
 const toggleOptions = () => {
@@ -24,135 +29,53 @@ const currentFolder = () => {
   return current
 }
 
-// Fetch folders from Supabase
-const fetchFolders = async () => {
-  const { data, error } = await supabase
-    .from('folders')
-    .select('*')
-    .eq('parent_id', null)  // Fetch root folders
-  
-  if (error) {
-    console.error('Error fetching folders:', error)
-  } else {
-    folders.value = data
-  }
+const openFolder = (folderName) => {
+  currentPath.value.push(folderName)
 }
 
-// Fetch files for a specific folder
-const fetchFiles = async (folderId) => {
-  const { data, error } = await supabase
-    .from('files')
-    .select('*')
-    .eq('folder_id', folderId)
-  
-  if (error) {
-    console.error('Error fetching files:', error)
-  } else {
-    return data
-  }
+const goBack = () => {
+  currentPath.value.pop()
 }
 
-// Create a new folder
-const createFolder = async () => {
+const createFolder = () => {
   const folderName = prompt('Enter new folder name:')
   if (folderName) {
-    const { data, error } = await supabase
-      .from('folders')
-      .insert([{ name: folderName, parent_id: null }]) // root folder (no parent)
-    
-    if (error) {
-      console.error('Error creating folder:', error)
-    } else {
-      folders.value.push(data[0])  // Add the newly created folder to local state
-    }
+    const folderList = currentFolder() ? currentFolder().subfolders : folders.value
+    folderList.push({ name: folderName, files: [], subfolders: [] })
   }
 }
 
-// Create a new file inside the current folder
-const createFile = async () => {
+const createFile = () => {
   const fileName = prompt('Enter new file name:')
   if (fileName) {
-    const current = currentFolder()
-    const folderId = current ? current.id : null
-    
-    const { data, error } = await supabase
-      .from('files')
-      .insert([{ name: fileName, folder_id: folderId, details: '' }])
-    
-    if (error) {
-      console.error('Error creating file:', error)
-    } else {
-      current.files.push(data[0])  // Add the newly created file to the current folder's files
-    }
+    currentFolder().files.push({ name: fileName, details: '' })
   }
 }
 
-// Rename folder
-const renameFolder = async (folder) => {
+const renameFolder = (folder) => {
   const newName = prompt('Edit folder name:', folder.name)
   if (newName) {
-    const { data, error } = await supabase
-      .from('folders')
-      .update({ name: newName })
-      .eq('id', folder.id)
-    
-    if (error) {
-      console.error('Error renaming folder:', error)
-    } else {
-      folder.name = newName  // Update the local folder name
-    }
+    folder.name = newName
   }
 }
 
-// Delete folder
-const deleteFolder = async (folder) => {
+const deleteFolder = (index) => {
+  const folderList = currentFolder() ? currentFolder().subfolders : folders.value
   if (confirm('Are you sure you want to delete this folder?')) {
-    const { error } = await supabase
-      .from('folders')
-      .delete()
-      .eq('id', folder.id)
-    
-    if (error) {
-      console.error('Error deleting folder:', error)
-    } else {
-      const index = folders.value.indexOf(folder)
-      if (index > -1) folders.value.splice(index, 1)  // Remove folder from local state
-    }
+    folderList.splice(index, 1)
   }
 }
 
-// Edit file details
-const editFile = async (file) => {
+const editFile = (file) => {
   const details = prompt('Enter details for this file:', file.details)
   if (details !== null) {
-    const { data, error } = await supabase
-      .from('files')
-      .update({ details })
-      .eq('id', file.id)
-    
-    if (error) {
-      console.error('Error editing file:', error)
-    } else {
-      file.details = details  // Update the file details locally
-    }
+    file.details = details
   }
 }
 
-// Delete file
-const deleteFile = async (file) => {
+const deleteFile = (index) => {
   if (confirm('Are you sure you want to delete this file?')) {
-    const { error } = await supabase
-      .from('files')
-      .delete()
-      .eq('id', file.id)
-    
-    if (error) {
-      console.error('Error deleting file:', error)
-    } else {
-      const folder = currentFolder()
-      const index = folder.files.indexOf(file)
-      if (index > -1) folder.files.splice(index, 1)  // Remove file from local state
-    }
+    currentFolder().files.splice(index, 1)
   }
 }
 
@@ -164,13 +87,7 @@ const viewFile = (file) => {
   selectedFile.value = file
   fileDialog.value = true
 }
-
-// Load initial folders and files
-onMounted(async () => {
-  await fetchFolders()
-})
 </script>
-
 
 
 
