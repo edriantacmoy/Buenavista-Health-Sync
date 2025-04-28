@@ -43,7 +43,7 @@ onMounted(() => {
     <template #content>
       <v-container fluid class="p-16">
         <v-row no-gutters style="gap: 30px">
-          <v-col cols="12" sm="5" class="profile-col">
+          <v-col cols="12" sm="5" class="profile-col" >
             <div class="Lred rounded-md shadow-lg">
               <img :src="profile.photo || defaultPhoto" alt="BHW photo" class="profile-img" />
               <div class="text-white text-start ps-16">
@@ -108,11 +108,11 @@ onMounted(() => {
   object-fit: cover;
   display: block;
   margin: 0 auto;
-  padding-top: 30px;
+  padding: 25px;
 }
 
 .profile-col {
-  font-size: 22px;
+  font-size: 12px;
 }
 
 .sched-col {
