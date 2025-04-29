@@ -9,7 +9,7 @@ const folders = ref([
   { name: 'Purok 2', files: [], subfolders: [] },
   { name: 'Purok 3', files: [], subfolders: [] },
   { name: 'Purok 4', files: [], subfolders: [] },
-  { name: 'Barangay Health Registry', files: [], subfolders: [] }
+  { name: 'Barangay Health Registry', files: [], subfolders: [] },
 ])
 
 const currentPath = ref([])
@@ -22,7 +22,7 @@ const toggleOptions = () => {
 const currentFolder = () => {
   let current = null
   for (const name of currentPath.value) {
-    const found = (current ? current.subfolders : folders.value).find(f => f.name === name)
+    const found = (current ? current.subfolders : folders.value).find((f) => f.name === name)
     if (!found) return null
     current = found
   }
@@ -89,8 +89,6 @@ const viewFile = (file) => {
 }
 </script>
 
-
-
 <template>
   <v-app>
     <!-- Navigation Bar -->
@@ -111,36 +109,56 @@ const viewFile = (file) => {
     </v-app-bar>
 
     <v-main class="mt-1" style="background-color: #d6c3aa; min-height: 100vh; position: relative">
-
       <v-btn
         v-if="currentPath.length"
         @click="goBack"
         variant="text"
-        style="position: absolute; top: 80px; left: 30px;"
+        style="position: absolute; top: 80px; left: 30px"
       >
         <v-icon left>mdi-arrow-left</v-icon> Back
       </v-btn>
 
       <!-- Folder and Files Grid -->
       <div
-        style="position: absolute; top: 140px; left: 50px; right: 50px; display: flex; flex-wrap: wrap; gap: 40px;"
+        style="
+          position: absolute;
+          top: 140px;
+          left: 50px;
+          right: 50px;
+          display: flex;
+          flex-wrap: wrap;
+          gap: 40px;
+        "
       >
         <!-- Folders -->
         <div
-          v-for="(folder, index) in (currentFolder() ? currentFolder().subfolders : folders)"
+          v-for="(folder, index) in currentFolder() ? currentFolder().subfolders : folders"
           :key="folder.name"
-          style="display: flex; flex-direction: column; align-items: center; position: relative; width: 120px;"
+          style="
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            position: relative;
+            width: 120px;
+          "
         >
           <!-- Folder & 3 dots side-by-side -->
-          <div style="display: flex; align-items: center; justify-content: center; position: relative;">
-            <v-icon size="80" color="orange" style="cursor: pointer;" @click="openFolder(folder.name)">
+          <div
+            style="display: flex; align-items: center; justify-content: center; position: relative"
+          >
+            <v-icon
+              size="80"
+              color="orange"
+              style="cursor: pointer"
+              @click="openFolder(folder.name)"
+            >
               mdi-folder
             </v-icon>
 
             <!-- 3 Dots Vertical -->
             <v-menu offset-y>
               <template #activator="{ props }">
-                <v-btn icon v-bind="props" variant="text" size="small" style="margin-left: 4px;">
+                <v-btn icon v-bind="props" variant="text" size="small" style="margin-left: 4px">
                   <v-icon size="20">mdi-dots-vertical</v-icon>
                 </v-btn>
               </template>
@@ -161,18 +179,26 @@ const viewFile = (file) => {
 
         <!-- Files -->
         <div
-          v-for="(file, index) in (currentFolder()?.files || [])"
+          v-for="(file, index) in currentFolder()?.files || []"
           :key="file.name"
-          style="display: flex; flex-direction: column; align-items: center; position: relative; width: 120px;"
+          style="
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            position: relative;
+            width: 120px;
+          "
         >
-          <div style="display: flex; align-items: center; justify-content: center; position: relative;">
-            <v-icon size="80" color="blue" style="cursor: pointer;" @click="viewFile(file)">
+          <div
+            style="display: flex; align-items: center; justify-content: center; position: relative"
+          >
+            <v-icon size="80" color="blue" style="cursor: pointer" @click="viewFile(file)">
               mdi-file
             </v-icon>
 
             <v-menu offset-y>
               <template #activator="{ props }">
-                <v-btn icon v-bind="props" variant="text" size="small" style="margin-left: 4px;">
+                <v-btn icon v-bind="props" variant="text" size="small" style="margin-left: 4px">
                   <v-icon size="20">mdi-dots-vertical</v-icon>
                 </v-btn>
               </template>
@@ -194,10 +220,24 @@ const viewFile = (file) => {
 
       <!-- Floating Create Button -->
       <div
-        style="position: absolute; bottom: 30px; right: 30px; display: flex; flex-direction: column; align-items: flex-end;"
+        style="
+          position: absolute;
+          bottom: 30px;
+          right: 30px;
+          display: flex;
+          flex-direction: column;
+          align-items: flex-end;
+        "
       >
-        <div v-if="showCreateOptions" style="background: white; padding: 8px; border-radius: 8px; margin-bottom: 8px;">
-          <v-btn variant="text" size="small" @click="currentFolder() ? createFile() : createFolder()">
+        <div
+          v-if="showCreateOptions"
+          style="background: white; padding: 8px; border-radius: 8px; margin-bottom: 8px"
+        >
+          <v-btn
+            variant="text"
+            size="small"
+            @click="currentFolder() ? createFile() : createFolder()"
+          >
             {{ currentFolder() ? 'Create New File' : 'Create New Folder' }}
           </v-btn>
         </div>
@@ -235,7 +275,6 @@ const viewFile = (file) => {
   </v-app>
 </template>
 
-
 <style scoped>
 .search-bar {
   position: absolute;
@@ -253,8 +292,7 @@ const viewFile = (file) => {
   background-color: white;
   padding: 2px 8px;
   border-radius: 6px;
-  text-align: left;  /* Align text to the left */
+  text-align: left; /* Align text to the left */
   white-space: nowrap;
 }
-
 </style>
