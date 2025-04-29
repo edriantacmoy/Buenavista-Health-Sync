@@ -40,7 +40,7 @@ onMounted(() => {
 
 <template>
   <AppLayout>
-    <template #content>
+    <template #content>      
       <v-container fluid class="p-16">
         <v-row no-gutters style="gap: 30px">
           <v-col cols="12" sm="5" class="profile-col" >

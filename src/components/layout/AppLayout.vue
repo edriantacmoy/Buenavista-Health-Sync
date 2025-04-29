@@ -13,9 +13,9 @@ function onClick() {
     <v-app :theme="theme">
       <!-- Reduced height of app bar -->
       <v-app-bar class="px-2" color="#561C24" style="height: 60px;">
-        <v-img class="mx-auto" max-width="80" src="/images/img/BHSlogo.png"></v-img>
+        <v-img class="mx-auto" max-width="80" src=""></v-img>
         <v-spacer />
-        <v-img src="/images/img/Blogo.png" max-width="40" alt="Logo" />
+        <v-img src="" max-width="40" alt="Logo" />
       </v-app-bar>
       
       <!-- Smaller container with reduced padding -->
