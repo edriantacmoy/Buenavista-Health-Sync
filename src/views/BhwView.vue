@@ -1,5 +1,6 @@
 <script setup>
 import AppLayout from '@/components/layout/AppLayout.vue'
+import BhwLayout from '@/components/layout/BhwLayout.vue'
 import { useDisplay } from 'vuetify'
 import { useRouter } from 'vue-router'
 import { ref, onMounted } from 'vue'
@@ -39,9 +40,9 @@ onMounted(() => {
 </script>
 
 <template>
-  <AppLayout>
-    <template #content>      
-      <v-container fluid class="p-16">
+  <BhwLayout>
+    <template #nav>
+      <v-container fluid class="bgcon p-16">
         <v-row no-gutters style="gap: 30px">
           <v-col cols="12" sm="5" class="profile-col" >
             <div class="Lred rounded-md shadow-lg">
@@ -93,12 +94,15 @@ onMounted(() => {
         </v-row>
       </v-container>
     </template>
-  </AppLayout>
+  </BhwLayout>
 </template>
 
 <style scoped>
 .Lred {
-  background-color: #e57373;
+  background-color: #561c24;
+}
+.bgcon{
+  background-color: #d9cab3;
 }
 
 .profile-img {
