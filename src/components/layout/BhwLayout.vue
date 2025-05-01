@@ -15,11 +15,11 @@ function onClick() {
     <!-- Header -->
     <v-app-bar color="#561C24" dark elevate-on-scroll flat height="80">
       <v-container class="d-flex align-center justify-space-between">
-        <div class="d-flex align-center logo-container">
-          <img :src="muniLogo" class=" ml-4" contain />
+        <div class="d-flex logo-container">
+          <img :src="muniLogo" class=" nav-logo1 ml-4" contain />
         </div>    
-        <div class="d-flex align-center logo-container">
-          <img :src="circLogo" class="ml-4" contain />
+        <div class="d-flex logo-container">
+          <img :src="circLogo" class=" nav-logo ml-4" contain />
         </div>
         <v-spacer></v-spacer>
         <div class="nav-links">
@@ -55,6 +55,26 @@ function onClick() {
 
 .bgcon{
   background-color: #d9cab3;
+}
+
+.nav-logo {
+  width: 100px;
+  height: 100px;
+  object-fit: contain;
+  margin-top: 25px;
+}
+
+.nav-logo1 {
+
+  width: 60px;
+  height: 60px;
+  object-fit: contain;
+  margin-left: 20px;
+  
+}
+
+.logo-container {
+  gap: 10px;
 }
 
 </style>

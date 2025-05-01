@@ -42,17 +42,29 @@ onMounted(() => {
   <BhwLayout>
     <template #nav>
       <v-container fluid class="no-scroll">
-        <v-row style="gap: 30px;">
-          <v-col cols="12" sm="5" class="profile-col" >
-            <div class="Lred rounded-md shadow-lg">
+        <v-row style="gap: 30px">
+          <v-col cols="12" sm="5" class="profile-col">
+            <div class="Lred rounded-md shadow-lg custom-max-width">
               <img :src="profile.photo || defaultPhoto" alt="BHW photo" class="profile-img" />
               <div class="text-white text-start ps-16">
-                <p>Name: {{ profile.name }}</p>
-                <p>Age: {{ profile.age }}</p>
-                <p>Birthdate: {{ profile.birthdate }}</p>
-                <p>Address: {{ profile.address }}</p>
-                <p>Contact number: {{ profile.contact }}</p>
-                <p class="pb-5">Assigned Purok: {{ profile.assignedPurok }}</p>
+                <p>
+                  <b>Name: {{ profile.name }}</b>
+                </p>
+                <p>
+                  <b>Age: {{ profile.age }}</b>
+                </p>
+                <p>
+                  <b>Birthdate: {{ profile.birthdate }}</b>
+                </p>
+                <p>
+                  <b>Address: {{ profile.address }}</b>
+                </p>
+                <p>
+                  <b>Contact number: {{ profile.contact }}</b>
+                </p>
+                <p class="pb-5">
+                  <b>Assigned Purok: {{ profile.assignedPurok }}</b>
+                </p>
               </div>
             </div>
           </v-col>
@@ -63,7 +75,7 @@ onMounted(() => {
                 <p>{{ dutySchedule.days }} {{ dutySchedule.time }}</p>
               </div>
               <div v-else>
-                <p>No schedule available.</p>
+                <p>Set your schedule.</p>
               </div>
             </div>
           </v-col>
@@ -101,7 +113,6 @@ onMounted(() => {
   background-color: #561c24;
 }
 
-
 .profile-img {
   width: 100%;
   max-width: 500px;
@@ -112,11 +123,15 @@ onMounted(() => {
   padding: 25px;
 }
 
+.custom-max-width {
+  max-width: 350px;
+  max-height: 600px;
+  margin: 0 auto;
+}
+
 .profile-col {
   font-size: 12px;
   margin-left: 50px;
-  
-  
 }
 
 .sched-col {
