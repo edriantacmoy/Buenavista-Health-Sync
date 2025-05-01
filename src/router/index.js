@@ -3,6 +3,9 @@ import LoginView from '@/views/auth/auth/LoginView.vue'
 import RegisterView from '@/views/auth/auth/RegisterView.vue'
 import DashboardView from '@/components/auth/DashboardView.vue'
 import RecordsView from '@/components/auth/RecordsView.vue'
+import BhwView from '@/components/auth/BhwView.vue' 
+import ProfileView from '@/components/auth/ProfileView.vue'  // Correct import
+
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -26,6 +29,17 @@ const router = createRouter({
       name: 'records',
       component: RecordsView,
     },
+    {
+      path: '/bhw',
+      name: 'bhw',
+      component: BhwView, 
+    },
+    {
+      path: '/profile',
+      name: 'profile',
+      component: ProfileView,  // Correct component reference
+    },
+
   ],
 })
 
