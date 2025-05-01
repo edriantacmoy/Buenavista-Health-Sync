@@ -41,7 +41,7 @@ function submitProfile() {
     dutySchedule: dutySchedule.value,
   }
   localStorage.setItem('bhwProfile', JSON.stringify(data))
-  router.push('/BHW')
+  router.push('/bhws')
 }
 </script>
 

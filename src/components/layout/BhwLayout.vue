@@ -1,6 +1,5 @@
 <script setup>
 import buenalogo from '@/assets/buenalogo.png'
-// import bhww from '@/assets/bhww.png' // 🔴 Removed: unused
 import { ref } from 'vue'
 
 const theme = ref('light')

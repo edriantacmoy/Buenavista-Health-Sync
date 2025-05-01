@@ -30,7 +30,7 @@ const routes = [
     component: RecordsView,
   },
   {
-    path: '/bhw',
+    path: '/bhws',
     name: 'bhw',
     component: BhwView,
   },

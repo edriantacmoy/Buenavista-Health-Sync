@@ -8,7 +8,7 @@ const { mobile } = useDisplay()
 const router = useRouter()
 const menu = ref(false)
 
-const defaultPhoto = '/images/default-profile.png' // ✅ fallback image
+const defaultPhoto = '/images/img/profile.png ' // ✅ fallback image
 
 const profile = ref({})
 const dutySchedule = ref({})
