@@ -1,5 +1,4 @@
 <script setup>
-import AppLayout from '@/components/layout/AppLayout.vue'
 import BhwLayout from '@/components/layout/BhwLayout.vue'
 import { useDisplay } from 'vuetify'
 import { useRouter } from 'vue-router'
@@ -42,8 +41,8 @@ onMounted(() => {
 <template>
   <BhwLayout>
     <template #nav>
-      <v-container fluid class="bgcon p-16">
-        <v-row no-gutters style="gap: 30px">
+      <v-container fluid class="no-scroll">
+        <v-row style="gap: 30px;">
           <v-col cols="12" sm="5" class="profile-col" >
             <div class="Lred rounded-md shadow-lg">
               <img :src="profile.photo || defaultPhoto" alt="BHW photo" class="profile-img" />
@@ -70,7 +69,7 @@ onMounted(() => {
           </v-col>
         </v-row>
       </v-container>
-      <v-container fluid class="p-16">
+      <v-container fluid class="">
         <v-row class="">
           <div class="fab-menu">
             <v-menu v-model="menu" :close-on-content-click="false" offset="8">
@@ -101,9 +100,7 @@ onMounted(() => {
 .Lred {
   background-color: #561c24;
 }
-.bgcon{
-  background-color: #d9cab3;
-}
+
 
 .profile-img {
   width: 100%;
@@ -117,6 +114,9 @@ onMounted(() => {
 
 .profile-col {
   font-size: 12px;
+  margin-left: 50px;
+  
+  
 }
 
 .sched-col {

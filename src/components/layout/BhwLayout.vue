@@ -1,4 +1,6 @@
 <script setup>
+import circLogo from '@/assets/circlogo.png'
+import muniLogo from '@/assets/munilogo.png'
 import { ref } from 'vue'
 
 const theme = ref('light')
@@ -14,10 +16,10 @@ function onClick() {
     <v-app-bar color="#561C24" dark elevate-on-scroll flat height="80">
       <v-container class="d-flex align-center justify-space-between">
         <div class="d-flex align-center logo-container">
-          <v-img src="images/img/circlelogo.png" class="nav-logo ml-4" contain />
+          <img :src="muniLogo" class=" ml-4" contain />
         </div>    
         <div class="d-flex align-center logo-container">
-          <v-img src="images/img/buenalogo.png" class="nav-logo ml-4" contain />
+          <img :src="circLogo" class="ml-4" contain />
         </div>
         <v-spacer></v-spacer>
         <div class="nav-links">
@@ -32,7 +34,7 @@ function onClick() {
     </v-app-bar>
 
     <!-- Main Content Slot -->
-    <v-main max-width="800px">
+    <v-main class="bgcon" >
       <slot name="nav" />
     </v-main>
 
@@ -49,3 +51,10 @@ function onClick() {
     </v-footer>
   </v-app>
 </template>
+<style scoped>
+
+.bgcon{
+  background-color: #d9cab3;
+}
+
+</style>
