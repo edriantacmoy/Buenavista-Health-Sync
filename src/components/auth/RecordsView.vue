@@ -1,7 +1,6 @@
 <script setup>
 import { ref } from 'vue'
 import { useRouter } from 'vue-router'
-import { supabase } from '@/utils/supabase'
 
 const router = useRouter()
 
@@ -38,97 +37,49 @@ const goBack = () => {
   currentPath.value.pop()
 }
 
-const createFolder = async () => {
+const createFolder = () => {
   const folderName = prompt('Enter new folder name:')
-  if (!folderName) return
-
-  const parent = currentFolder()
-  const { data, error } = await supabase
-    .from('items')
-    .insert({
-      name: folderName,
-      type: 'folder',
-      parent_id: parent?.id || null,
-    })
-    .select()
-
-  if (data) {
-    if (parent) parent.subfolders.push({ ...data[0], files: [], subfolders: [] })
-    else folders.value.push({ ...data[0], files: [], subfolders: [] })
+  if (folderName) {
+    const folderList = currentFolder() ? currentFolder().subfolders : folders.value
+    folderList.push({ name: folderName, files: [], subfolders: [] })
   }
 }
 
-const createFile = async () => {
+const createFile = () => {
   const fileName = prompt('Enter new file name:')
-  if (!fileName || !currentFolder()) return
-
-  const { data, error } = await supabase
-    .from('items')
-    .insert({
-      name: fileName,
-      type: 'file',
-      parent_id: currentFolder().id,
-      details: '',
-    })
-    .select()
-
-  if (data) currentFolder().files.push(data[0])
+  if (fileName) {
+    currentFolder().files.push({ name: fileName, details: '' })
+  }
 }
 
-const renameFolder = async (folder) => {
+const renameFolder = (folder) => {
   const newName = prompt('Edit folder name:', folder.name)
-  if (!newName) return
-
-  const { error } = await supabase.from('items').update({ name: newName }).eq('id', folder.id)
-
-  if (!error) {
+  if (newName) {
     folder.name = newName
-  } else {
-    console.error('Rename failed:', error)
   }
 }
 
-const deleteFolder = async (index) => {
+const deleteFolder = (index) => {
   const folderList = currentFolder() ? currentFolder().subfolders : folders.value
-  const folder = folderList[index]
-  if (!folder || !confirm('Are you sure you want to delete this folder?')) return
-
-  // Optionally: recursively delete child folders/files if needed
-  const { error } = await supabase.from('items').delete().eq('id', folder.id)
-
-  if (!error) {
+  if (confirm('Are you sure you want to delete this folder?')) {
     folderList.splice(index, 1)
-  } else {
-    console.error('Delete folder failed:', error)
   }
 }
 
-const editFile = async (file) => {
+const editFile = (file) => {
   const details = prompt('Enter details for this file:', file.details)
-  if (details === null) return
-
-  const { error } = await supabase.from('items').update({ details }).eq('id', file.id)
-
-  if (!error) {
+  if (details !== null) {
     file.details = details
-  } else {
-    console.error('Edit file failed:', error)
   }
 }
 
-const deleteFile = async (index) => {
-  const file = currentFolder()?.files[index]
-  if (!file || !confirm('Are you sure you want to delete this file?')) return
-
-  const { error } = await supabase.from('items').delete().eq('id', file.id)
-
-  if (!error) {
+const deleteFile = (index) => {
+  if (confirm('Are you sure you want to delete this file?')) {
     currentFolder().files.splice(index, 1)
-  } else {
-    console.error('Delete file failed:', error)
   }
 }
 
+// File viewing
 const selectedFile = ref(null)
 const fileDialog = ref(false)
 
