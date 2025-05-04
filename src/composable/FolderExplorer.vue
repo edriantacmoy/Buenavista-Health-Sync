@@ -1,29 +1,31 @@
 <script setup>
 import { ref, onMounted } from 'vue'
+import { useRouter } from 'vue-router'
 import { supabase } from '@/utils/supabase'
+
+const router = useRouter()
 
 const folders = ref([])
 const currentPath = ref([])
+const showCreateOptions = ref(false)
 const selectedFile = ref(null)
 const fileDialog = ref(false)
-const showCreateOptions = ref(false)
 
-// Fetch top-level folders (no parent)
+const toggleOptions = () => {
+  showCreateOptions.value = !showCreateOptions.value
+}
+
 const fetchRootFolders = async () => {
   const { data, error } = await supabase
     .from('items')
     .select('*')
     .eq('parent_id', null)
 
-  if (error) {
-    console.error('Failed to load root folders:', error)
-    return
-  }
+  if (error) return console.error('Failed to load root folders:', error)
 
   folders.value = data.map(f => ({ ...f, subfolders: [], files: [] }))
 }
 
-// Get current folder node based on path
 const currentFolder = () => {
   let node = null
   for (const name of currentPath.value) {
@@ -34,33 +36,23 @@ const currentFolder = () => {
   return node
 }
 
-// Open a folder and fetch its contents if not already loaded
 const openFolder = async (folderName) => {
   currentPath.value.push(folderName)
   const folder = currentFolder()
-  if (!folder || folder.subfolders.length > 0 || folder.files.length > 0) return
+  if (!folder || folder.subfolders.length || folder.files.length) return
 
   const { data, error } = await supabase
     .from('items')
     .select('*')
     .eq('parent_id', folder.id)
 
-  if (error) {
-    console.error('Failed to fetch subfolders:', error)
-    return
-  }
+  if (error) return console.error('Failed to fetch subfolders:', error)
 
   folder.subfolders = data.filter(item => item.type === 'folder').map(f => ({ ...f, subfolders: [], files: [] }))
   folder.files = data.filter(item => item.type === 'file')
 }
 
-const goBack = () => {
-  currentPath.value.pop()
-}
-
-const toggleOptions = () => {
-  showCreateOptions.value = !showCreateOptions.value
-}
+const goBack = () => currentPath.value.pop()
 
 const createFolder = async () => {
   const name = prompt('New folder name:')
@@ -174,45 +166,3 @@ const viewFile = (file) => {
 
 onMounted(fetchRootFolders)
 </script>
-
-
-<template>
-  <div>
-    <v-btn @click="goBack" v-if="currentPath.length">⬅️ Back</v-btn>
-    <v-btn @click="createFolder">➕ New Folder</v-btn>
-    <v-btn @click="createFile" v-if="currentFolder()">📄 New File</v-btn>
-
-    <div class="folders">
-      <div
-        v-for="folder in currentFolder() ? currentFolder().subfolders : folders"
-        :key="folder.id"
-        class="folder"
-        @click="openFolder(folder.name)"
-      >
-        <v-icon color="orange" size="60">mdi-folder</v-icon>
-        <span>{{ folder.name }}</span>
-      </div>
-    </div>
-
-    <div class="files" v-if="currentFolder() && currentFolder().files.length">
-      <div v-for="file in currentFolder().files" :key="file.id" class="file">
-        <v-icon color="blue" size="40">mdi-file</v-icon>
-        <span>{{ file.name }}</span>
-      </div>
-    </div>
-  </div>
-</template>
-
-<style scoped>
-.folders, .files {
-  display: flex;
-  gap: 20px;
-  margin-top: 20px;
-}
-.folder, .file {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  width: 100px;
-}
-</style>
