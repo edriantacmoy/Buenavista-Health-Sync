@@ -80,9 +80,7 @@ function submitProfile() {
           />
 
           <!-- Submit Button -->
-          <v-btn type="submit" color="#561C24" class="mt-4" block>
-            Save Profile
-          </v-btn>
+          <v-btn type="submit" color="#561C24" class="mt-4" block> Save Profile </v-btn>
         </v-form>
       </v-container>
     </template>

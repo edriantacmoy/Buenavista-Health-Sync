@@ -2,7 +2,7 @@ import { createRouter, createWebHistory } from 'vue-router'
 
 // ✅ Check these paths are correct relative to your file structure
 import LoginView from '@/views/auth/auth/LoginView.vue'
-import RegisterView from '@/components/auth/RegisterForm.vue'
+import RegisterView from '@/views/auth/auth/RegisterView.vue'
 import DashboardView from '@/components/auth/DashboardView.vue'
 import RecordsView from '@/components/auth/RecordsView.vue'
 import BhwView from '@/components/auth/BhwView.vue'
